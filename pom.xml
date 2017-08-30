@@ -6,9 +6,11 @@
 
     <build>
         <plugins>
-            <plugin> <groupId>com.google.appengine</groupId>
+            <plugin>
+                <groupId>com.google.appengine</groupId>
                 <artifactId>appengine-maven-plugin</artifactId>
-                <version>1.9.21</version> </plugin>
+                <version>${appengine.target.version}</version>
+            </plugin>
         </plugins>
     </build>
 
