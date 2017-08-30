@@ -1,0 +1,8 @@
+Manifest-Version: 1.0
+Implementation-Version: 1.0-SNAPSHOT
+Built-By: sony
+Implementation-Vendor-Id: weatherApp
+Created-By: IntelliJ IDEA
+Build-Jdk: 1.7.0_60-ea
+Main-Class: ${start-class}
+
