@@ -4,21 +4,14 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>com.google.appengine</groupId>
-                <artifactId>appengine-maven-plugin</artifactId>
-                <version>${appengine.target.version}</version>
-            </plugin>
-        </plugins>
-    </build>
 
     <groupId>weatherApp</groupId>
     <artifactId>weatherApp</artifactId>
     <version>1.0-SNAPSHOT</version>
 
-    <pluginRepositories> <pluginRepository> <id>google-snapshots</id> <name>Google Snapshots</name> <url>https://oss.sonatype.org/content/repositories/google-snapshots/</url> <snapshots> <enabled>true</enabled> </snapshots> <releases> <enabled>false</enabled> </releases> </pluginRepository> </pluginRepositories>
+    <pluginRepositories> <pluginRepository> <id>google-snapshots</id> <name>Google Snapshots</name> 
+<url>https://oss.sonatype.org/content/repositories/google-snapshots/</url> <snapshots> <enabled>true</enabled> </snapshots> <releases> 
+<enabled>false</enabled> </releases> </pluginRepository> </pluginRepositories>
 
     <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-parent -->
     <parent>
@@ -34,14 +27,28 @@
             <url>https://oss.sonatype.org/content/groups/public/</url>
         </repository>
     </repositories>
-
+	
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<maven.compiler.target>1.7</maven.compiler.target>
+		<maven.compiler.source>1.7</maven.compiler.source>
+		<appengine.app.version>1</appengine.app.version>
+		<appengine.target.version>1.9.54</appengine.target.version>
+		<appengine-maven-plugin-version>1.3.1</appengine-maven-plugin-version>
+	</properties>
+	
     <dependencies>
-
-        <dependency>
+		<dependency>
+			<groupId>com.google.appengine</groupId>
+			<artifactId>appengine-api-1.0-sdk</artifactId>
+			<version>${appengine.target.version}</version>
+		</dependency>
+        
+		<dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
-
+	
         <dependency>
             <groupId>org.apache.camel</groupId>
             <artifactId>camel-core</artifactId>
@@ -81,4 +88,31 @@
             <version>20090211</version>
         </dependency>
     </dependencies>
+	
+	<build>
+		 <outputDirectory>target/${project.artifactId}/WEB-INF/classes</outputDirectory>
+		<plugins>
+			<plugin>
+			<groupId>org.apache.maven.plugins</groupId>
+			<artifactId>maven-war-plugin</artifactId>
+			<version>2.3</version>
+			<configuration>
+			<archiveClasses>true</archiveClasses>
+			<webResources>
+            <!-- in order to interpolate version from pom into appengine-web.xml -->
+				<resource>
+				<directory>${basedir}/src/main/webapp/WEB-INF</directory>
+				<filtering>true</filtering>
+				<targetPath>WEB-INF</targetPath>
+				</resource>
+			</webResources>
+			</configuration>
+			</plugin>
+           <plugin>
+			<groupId>com.google.cloud.tools</groupId>
+			<artifactId>appengine-maven-plugin</artifactId>
+			<version>${appengine-maven-plugin-version}</version>
+		    </plugin>
+        </plugins>
+    </build>
 </project>
